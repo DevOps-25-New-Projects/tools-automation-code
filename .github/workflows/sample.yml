@@ -7,9 +7,9 @@
 #      - run: terraform --version
 
 
-name: Terraform smoke
+name: CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   tf:
@@ -17,13 +17,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Install Terraform on THIS runner
+      # Install Terraform on the runner
       - uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.7.5   # or "latest"
+          terraform_version: 1.12.2   # or "latest"
 
-      - name: Verify install
-        run: |
-          which terraform || true
-          echo "PATH=$PATH"
-          terraform -version
+      - name: Verify Terraform
+        run: terraform -version
+
+      # your steps
+      - name: Init
+        run: terraform init
+      - name: Validate
+        run: terraform validate -no-color
+
