@@ -1,2 +1,13 @@
-- debug:
-    msg: hello
+- name: setup prompt
+  ansible.builtin.shell: set-prompt github-runner
+
+- name: make github directory
+  ansible.builtin.file:
+    path: /actions-runner
+    state: directory
+
+- name: Download & Extract runner
+  ansible.builtin.unarchive:
+    src: https://github.com/actions/runner/releases/download/v2.328.0/actions-runner-linux-x64-2.328.0.tar.gz
+    dest: "/actions-runner"
+    remote_src: yes
