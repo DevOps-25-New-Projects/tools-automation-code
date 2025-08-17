@@ -1,10 +1,29 @@
-name: provision tools infra
+#name: provision tools infra
+#on: [push, workflow_dispatch]
+#jobs:
+#  provision:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - run: terraform install
+
+
+name: Terraform CI
 on: [push, workflow_dispatch]
+
 jobs:
-  provision:
+  tf:
     runs-on: ubuntu-latest
     steps:
-      - run: terraform install
+      - uses: actions/checkout@v4
+
+      # Install Terraform on the runner
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.5   # or "latest"
+
+      - name: Verify
+        run: terraform -version
+
 
 
 
