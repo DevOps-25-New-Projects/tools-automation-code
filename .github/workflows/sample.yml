@@ -1,10 +1,17 @@
-name: provision tools infra
-on: [push, workflow_dispatch]
-jobs:
-  provision:
-    runs-on: ubuntu-latest
-    steps:
-      - run: terraform --version
+- name: Debug PATH
+  run: |
+    echo "PATH=$PATH"
+    ls -la /opt/hostedtoolcache || true
+    which terraform || echo "terraform not on PATH"
+
+
+#name: provision tools infra
+#on: [push, workflow_dispatch]
+#jobs:
+#  provision:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - run: terraform --version
 
 
 
