@@ -1,9 +1,29 @@
-name: provision tools infra
-on: [push, workflow_dispatch]
+#name: provision tools infra
+#on: [push, workflow_dispatch]
+#jobs:
+#  provision:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - run: terraform --version
+
+
+name: Terraform smoke
+
+on: [push]
+
 jobs:
-  provision:
+  tf:
     runs-on: ubuntu-latest
     steps:
-      - run: terraform --version
+      - uses: actions/checkout@v4
 
+      # Install Terraform on THIS runner
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.5   # or "latest"
 
+      - name: Verify install
+        run: |
+          which terraform || true
+          echo "PATH=$PATH"
+          terraform -version
